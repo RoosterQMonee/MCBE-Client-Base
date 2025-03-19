@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{14a57c88-1dd9-457d-8c18-5b9c55e19536}</ProjectGuid>
+    <RootNamespace>MinecraftBedrockBase</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(SolutionDir)/Dependencies</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(SolutionDir)/Dependencies</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;MINECRAFTBEDROCKBASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;MINECRAFTBEDROCKBASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;MINECRAFTBEDROCKBASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;MINECRAFTBEDROCKBASE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Dependencies\ImGui\imgui.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_impl_dx12.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="Dependencies\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Dependencies\MemLib\MinHook\buffer.c" />
+    <ClCompile Include="Dependencies\MemLib\MinHook\hde\hde32.c" />
+    <ClCompile Include="Dependencies\MemLib\MinHook\hde\hde64.c" />
+    <ClCompile Include="Dependencies\MemLib\MinHook\hook.c" />
+    <ClCompile Include="Dependencies\MemLib\MinHook\trampoline.c" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="MCBase\Hooks\Impl\DirectX.cpp" />
+    <ClCompile Include="MCBase\MCBase.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dependencies\EnTT\config\config.h" />
+    <ClInclude Include="Dependencies\EnTT\config\macro.h" />
+    <ClInclude Include="Dependencies\EnTT\config\version.h" />
+    <ClInclude Include="Dependencies\EnTT\container\dense_map.hpp" />
+    <ClInclude Include="Dependencies\EnTT\container\dense_set.hpp" />
+    <ClInclude Include="Dependencies\EnTT\container\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\algorithm.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\any.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\attribute.h" />
+    <ClInclude Include="Dependencies\EnTT\core\compressed_pair.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\enum.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\family.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\hashed_string.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\ident.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\iterator.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\memory.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\monostate.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\tuple.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\type_info.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\type_traits.hpp" />
+    <ClInclude Include="Dependencies\EnTT\core\utility.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\component.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\entity.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\group.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\handle.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\helper.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\mixin.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\observer.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\organizer.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\registry.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\runtime_view.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\snapshot.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\sparse_set.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\storage.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\table.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entity\view.hpp" />
+    <ClInclude Include="Dependencies\EnTT\entt.hpp" />
+    <ClInclude Include="Dependencies\EnTT\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\graph\adjacency_matrix.hpp" />
+    <ClInclude Include="Dependencies\EnTT\graph\dot.hpp" />
+    <ClInclude Include="Dependencies\EnTT\graph\flow.hpp" />
+    <ClInclude Include="Dependencies\EnTT\graph\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\locator\locator.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\adl_pointer.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\container.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\context.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\factory.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\meta.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\node.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\pointer.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\policy.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\range.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\resolve.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\template.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\type_traits.hpp" />
+    <ClInclude Include="Dependencies\EnTT\meta\utility.hpp" />
+    <ClInclude Include="Dependencies\EnTT\platform\android-ndk-r17.hpp" />
+    <ClInclude Include="Dependencies\EnTT\poly\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\poly\poly.hpp" />
+    <ClInclude Include="Dependencies\EnTT\process\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\process\process.hpp" />
+    <ClInclude Include="Dependencies\EnTT\process\scheduler.hpp" />
+    <ClInclude Include="Dependencies\EnTT\resource\cache.hpp" />
+    <ClInclude Include="Dependencies\EnTT\resource\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\resource\loader.hpp" />
+    <ClInclude Include="Dependencies\EnTT\resource\resource.hpp" />
+    <ClInclude Include="Dependencies\EnTT\signal\delegate.hpp" />
+    <ClInclude Include="Dependencies\EnTT\signal\dispatcher.hpp" />
+    <ClInclude Include="Dependencies\EnTT\signal\emitter.hpp" />
+    <ClInclude Include="Dependencies\EnTT\signal\fwd.hpp" />
+    <ClInclude Include="Dependencies\EnTT\signal\sigh.hpp" />
+    <ClInclude Include="Dependencies\ImGui\fa_solid_900.h" />
+    <ClInclude Include="Dependencies\ImGui\font_awesome_5.h" />
+    <ClInclude Include="Dependencies\ImGui\imconfig.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui_impl_dx12.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui_impl_dx9.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\ImGui\imgui_memory_editor.h" />
+    <ClInclude Include="Dependencies\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Dependencies\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Dependencies\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Dependencies\MemLib\Events.h" />
+    <ClInclude Include="Dependencies\MemLib\Helpers.h" />
+    <ClInclude Include="Dependencies\MemLib\Hooks.h" />
+    <ClInclude Include="Dependencies\MemLib\MemLib.h" />
+    <ClInclude Include="Dependencies\MemLib\Memory.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\buffer.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\hde\hde32.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\hde\hde64.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\hde\pstdint.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\hde\table32.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\hde\table64.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\Minhook.h" />
+    <ClInclude Include="Dependencies\MemLib\MinHook\trampoline.h" />
+    <ClInclude Include="Dependencies\MemLib\Module.h" />
+    <ClInclude Include="Dependencies\MemLib\Scanner.h" />
+    <ClInclude Include="Dependencies\spdlog\async.h" />
+    <ClInclude Include="Dependencies\spdlog\async_logger-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\async_logger.h" />
+    <ClInclude Include="Dependencies\spdlog\cfg\argv.h" />
+    <ClInclude Include="Dependencies\spdlog\cfg\env.h" />
+    <ClInclude Include="Dependencies\spdlog\cfg\helpers-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\cfg\helpers.h" />
+    <ClInclude Include="Dependencies\spdlog\common-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\common.h" />
+    <ClInclude Include="Dependencies\spdlog\details\backtracer-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\backtracer.h" />
+    <ClInclude Include="Dependencies\spdlog\details\circular_q.h" />
+    <ClInclude Include="Dependencies\spdlog\details\console_globals.h" />
+    <ClInclude Include="Dependencies\spdlog\details\file_helper-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\file_helper.h" />
+    <ClInclude Include="Dependencies\spdlog\details\fmt_helper.h" />
+    <ClInclude Include="Dependencies\spdlog\details\log_msg-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\log_msg.h" />
+    <ClInclude Include="Dependencies\spdlog\details\log_msg_buffer-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\log_msg_buffer.h" />
+    <ClInclude Include="Dependencies\spdlog\details\mpmc_blocking_q.h" />
+    <ClInclude Include="Dependencies\spdlog\details\null_mutex.h" />
+    <ClInclude Include="Dependencies\spdlog\details\os-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\os.h" />
+    <ClInclude Include="Dependencies\spdlog\details\periodic_worker-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\periodic_worker.h" />
+    <ClInclude Include="Dependencies\spdlog\details\registry-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\registry.h" />
+    <ClInclude Include="Dependencies\spdlog\details\synchronous_factory.h" />
+    <ClInclude Include="Dependencies\spdlog\details\tcp_client-windows.h" />
+    <ClInclude Include="Dependencies\spdlog\details\tcp_client.h" />
+    <ClInclude Include="Dependencies\spdlog\details\thread_pool-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\details\thread_pool.h" />
+    <ClInclude Include="Dependencies\spdlog\details\udp_client-windows.h" />
+    <ClInclude Include="Dependencies\spdlog\details\udp_client.h" />
+    <ClInclude Include="Dependencies\spdlog\details\windows_include.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bin_to_hex.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\args.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\base.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\chrono.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\color.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\compile.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\core.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\format-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\format.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\os.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\ostream.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\printf.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\ranges.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\std.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\bundled\xchar.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\chrono.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\compile.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\fmt.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\ostr.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\ranges.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\std.h" />
+    <ClInclude Include="Dependencies\spdlog\fmt\xchar.h" />
+    <ClInclude Include="Dependencies\spdlog\formatter.h" />
+    <ClInclude Include="Dependencies\spdlog\fwd.h" />
+    <ClInclude Include="Dependencies\spdlog\logger-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\logger.h" />
+    <ClInclude Include="Dependencies\spdlog\mdc.h" />
+    <ClInclude Include="Dependencies\spdlog\pattern_formatter-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\pattern_formatter.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\android_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\ansicolor_sink-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\ansicolor_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\base_sink-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\base_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\basic_file_sink-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\basic_file_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\callback_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\daily_file_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\dist_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\dup_filter_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\hourly_file_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\kafka_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\mongo_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\msvc_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\null_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\ostream_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\qt_sinks.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\ringbuffer_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\rotating_file_sink-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\rotating_file_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\sink-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\stdout_color_sinks-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\stdout_color_sinks.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\stdout_sinks-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\stdout_sinks.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\syslog_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\systemd_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\tcp_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\udp_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\wincolor_sink-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\wincolor_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\sinks\win_eventlog_sink.h" />
+    <ClInclude Include="Dependencies\spdlog\spdlog-inl.h" />
+    <ClInclude Include="Dependencies\spdlog\spdlog.h" />
+    <ClInclude Include="Dependencies\spdlog\stopwatch.h" />
+    <ClInclude Include="Dependencies\spdlog\tweakme.h" />
+    <ClInclude Include="Dependencies\spdlog\version.h" />
+    <ClInclude Include="MCBase\Events\Impl\GraphicalEvents.h" />
+    <ClInclude Include="MCBase\Hooks\Hook.h" />
+    <ClInclude Include="MCBase\Hooks\HookManager.h" />
+    <ClInclude Include="MCBase\Hooks\Impl\DirectX.h" />
+    <ClInclude Include="MCBase\Hooks\Impl\Extended\DirectXExternals.h" />
+    <ClInclude Include="MCBase\Hooks\Impl\Extended\DirectXFunctions.h" />
+    <ClInclude Include="MCBase\MCBase.h" />
+    <ClInclude Include="Util\Manager.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
