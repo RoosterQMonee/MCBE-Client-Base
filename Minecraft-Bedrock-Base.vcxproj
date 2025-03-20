@@ -125,6 +125,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)/Dependencies/libhat.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -146,6 +147,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);$(SolutionDir)/Dependencies/libhat.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -164,7 +166,9 @@
     <ClCompile Include="Dependencies\MemLib\MinHook\trampoline.c" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="MCBase\Hooks\Impl\DirectX.cpp" />
+    <ClCompile Include="MCBase\Hooks\Impl\FieldOfView.cpp" />
     <ClCompile Include="MCBase\MCBase.cpp" />
+    <ClCompile Include="MCBase\Modules\Impl\Zoom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\EnTT\config\config.h" />
@@ -254,6 +258,32 @@
     <ClInclude Include="Dependencies\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\ImGui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Dependencies\LibHat\libhat.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Access.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Callable.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\CompileTime.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Concepts.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\c\libhat.h" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Defines.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\FixedString.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\MemoryProtector.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Platform.h" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Process.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Result.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Scanner.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Signature.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\StringLiteral.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\System.hpp" />
+    <ClInclude Include="Dependencies\LibHat\libhat\Traits.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_all.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_containers.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_flags.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_format.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_fuse.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_iostream.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_switch.hpp" />
+    <ClInclude Include="Dependencies\MagicEnum\magic_enum_utility.hpp" />
     <ClInclude Include="Dependencies\MemLib\Events.h" />
     <ClInclude Include="Dependencies\MemLib\Helpers.h" />
     <ClInclude Include="Dependencies\MemLib\Hooks.h" />
@@ -379,8 +409,15 @@
     <ClInclude Include="MCBase\Hooks\Impl\DirectX.h" />
     <ClInclude Include="MCBase\Hooks\Impl\Extended\DirectXExternals.h" />
     <ClInclude Include="MCBase\Hooks\Impl\Extended\DirectXFunctions.h" />
+    <ClInclude Include="MCBase\Hooks\Impl\FieldOfView.h" />
     <ClInclude Include="MCBase\MCBase.h" />
+    <ClInclude Include="MCBase\Modules\Impl\Zoom.h" />
+    <ClInclude Include="MCBase\Modules\Module.h" />
+    <ClInclude Include="MCBase\Modules\ModuleManager.h" />
+    <ClInclude Include="MCBase\Modules\Setting.h" />
     <ClInclude Include="Util\Manager.h" />
+    <ClInclude Include="Util\Memory.h" />
+    <ClInclude Include="Util\Winrt.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

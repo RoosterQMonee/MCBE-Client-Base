@@ -12,4 +12,7 @@ public:
 	virtual void Disable() { spdlog::debug("Disable() with no override ({})", m_name); };
 
 	std::string m_name;
+
+protected:
+	static inline void* m_original = nullptr;
 };

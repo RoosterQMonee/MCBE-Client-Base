@@ -52,10 +52,10 @@ namespace MemLib {
 
             return {
                 name,
-                base,
                 size,
                 base,
-                size, 0
+                size,
+                base, 0
             };
         }
 

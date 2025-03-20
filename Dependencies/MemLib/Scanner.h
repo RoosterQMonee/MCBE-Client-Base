@@ -300,11 +300,11 @@ namespace MemLib {
         std::optional<ScanResult> scan_pattern(std::string pattern_str,
             const void* base_addr,
             size_t length) {
-            switch (detected_is) {
-                case InstructionSet::AVX512:
-                    return scan_with_avx512(pattern_str, base_addr, length);// dont have an AVX512 CPU to test this, relying on hopes and dreams
-                case InstructionSet::AVX2:
-                    return scan_with_avx2(pattern_str, base_addr, length);// TODO: fix crashing with __aligned_free 
+            switch (detected_is) { // AVX2 & AVX512 can be buggy
+                //case InstructionSet::AVX512:
+                //    return scan_with_avx512(pattern_str, base_addr, length);// dont have an AVX512 CPU to test this, relying on hopes and dreams
+                //case InstructionSet::AVX2:
+                //    return scan_with_avx2(pattern_str, base_addr, length);// TODO: fix crashing with __aligned_free 
                 case InstructionSet::SSE:
                     return scan_with_sse(pattern_str, base_addr, length);
                 default:
