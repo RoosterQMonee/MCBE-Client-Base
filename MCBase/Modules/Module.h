@@ -6,15 +6,14 @@
 #include <vector>
 
 enum ModuleCategory : uint8_t {
-	Client = 0,
-	Visual,
+	Visual = 0,
 	Player
 };
 
 class Module {
 public:
-	Module(std::string& name, ModuleCategory category) : m_name{ name }, m_category{ category } {};
-	Module(const char* name, ModuleCategory category) : m_name{ std::string(name) }, m_category{ category } {};
+	Module(std::string& name, ModuleCategory category, bool enabled = false) : m_name{ name }, m_category{ category }, m_enabled{ enabled } {};
+	Module(const char* name, ModuleCategory category, bool enabled = false) : m_name{ std::string(name) }, m_category{ category }, m_enabled{ enabled } {};
 
 	virtual void Enable() {};
 	virtual void Disable() {};
@@ -26,16 +25,10 @@ public:
 	void Toggle() { m_enabled = !m_enabled; }
 
 	template<typename T>
-	void AddNewSetting(Setting<T>& setting) {
-		m_settings.push_back(std::make_shared<FlexibleStorage<T>>(setting));
-	}
-
-	template<typename T>
-	std::shared_ptr<Setting<T>> GetSetting(size_t index) {
-		if (index >= m_settings.size()) {
-			throw std::out_of_range("Setting index out of range");
-		}
-		return std::dynamic_pointer_cast<FlexibleStorage<T>>(m_settings[index]);
+	std::shared_ptr<Setting<T>> AddSetting(Setting<T>& setting) {
+		auto setting = std::make_shared<Setting<T>>(setting);
+		m_settings.push_back(setting);
+		return setting;
 	}
 
 private:

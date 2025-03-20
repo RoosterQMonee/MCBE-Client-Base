@@ -16,7 +16,12 @@ void IClient::Init(HINSTANCE instance) {
     Client.get()->m_hookManager.Init();
     Client.get()->m_hookManager.ForEach([](Hook& hk) {
         hk.Enable();
-        spdlog::info("Enabled Hook: {}", hk.m_name);
+        spdlog::info("Enabled Hook: {}", hk.GetName());
+    });
+
+    Client.get()->m_moduleManager.Init();
+    Client.get()->m_moduleManager.ForEach([](Module& mod) {
+        spdlog::info("Loaded Module: {}", mod.GetName());
     });
 
     while (true) {
