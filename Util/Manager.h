@@ -8,7 +8,7 @@
 template<class T>
 class Manager {
 private:
-    std::vector<std::unique_ptr<T>> m_items;
+    std::vector<std::shared_ptr<T>> m_items;
 
 public:
     Manager() = default;
@@ -16,9 +16,9 @@ public:
 
     template<class U, typename... Args>
     U* Add(Args&&... args) {
-        auto ptr = std::make_unique<U>(std::forward<Args>(args)...);
+        auto ptr = std::make_shared<U>(std::forward<Args>(args)...);
         auto* raw = ptr.get();
-        m_items.push_back(std::move(ptr));
+        m_items.push_back(ptr);
         return raw;
     }
 
@@ -27,7 +27,7 @@ public:
         (this->Add<U>(), ...);
     };
 
-    template<std::invocable<T> F>
+    template<std::invocable<T&> F>
     void ForEach(F&& callback) const {
         for (const auto& item : m_items) {
             callback(*item.get());  // Dereference the pointer

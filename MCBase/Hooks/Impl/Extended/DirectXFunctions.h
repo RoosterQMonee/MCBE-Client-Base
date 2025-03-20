@@ -47,177 +47,165 @@ private:
 
 public:
     static bool Init() noexcept {
-        // Window creation
-        WNDCLASSEX windowClass = []() {
-            WNDCLASSEX wc = {};
-            wc.cbSize = sizeof(WNDCLASSEX);
-            wc.style = CS_HREDRAW | CS_VREDRAW;
-            wc.lpfnWndProc = DefWindowProc;
-            wc.hInstance = GetModuleHandle(nullptr);
-            wc.lpszClassName = L"DXWin";
-            return wc;
-        }();
+		WNDCLASSEX windowClass;
+		windowClass.cbSize = sizeof(WNDCLASSEX);
+		windowClass.style = CS_HREDRAW | CS_VREDRAW;
+		windowClass.lpfnWndProc = DefWindowProc;
+		windowClass.cbClsExtra = 0;
+		windowClass.cbWndExtra = 0;
+		windowClass.hInstance = GetModuleHandle(NULL);
+		windowClass.hIcon = NULL;
+		windowClass.hCursor = NULL;
+		windowClass.hbrBackground = NULL;
+		windowClass.lpszMenuName = NULL;
+		windowClass.lpszClassName = L"Kpaste";
+		windowClass.hIconSm = NULL;
 
-        HWND window = CreateWindowEx(
-            0, windowClass.lpszClassName, L"DXWin",
-            WS_OVERLAPPEDWINDOW, 0, 0, 100, 100,
-            nullptr, nullptr, windowClass.hInstance, nullptr
-        );
+		::RegisterClassEx(&windowClass);
 
-        if (!window) {
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		HWND window = ::CreateWindow(windowClass.lpszClassName, L"KPDxWin", WS_OVERLAPPEDWINDOW, 0, 0, 100, 100, NULL, NULL, windowClass.hInstance, NULL);
 
-        // Load required DLLs
-        auto libDXGI = GetModuleHandle(L"dxgi.dll");
-        auto libD3D12 = GetModuleHandle(L"d3d12.dll");
+		HMODULE libDXGI;
+		HMODULE libD3D12;
+		if ((libDXGI = ::GetModuleHandle(L"dxgi.dll")) == NULL || (libD3D12 = ::GetModuleHandle(L"d3d12.dll")) == NULL)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        if (!libDXGI || !libD3D12) {
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		void* CreateDXGIFactory;
+		if ((CreateDXGIFactory = ::GetProcAddress(libDXGI, "CreateDXGIFactory")) == NULL)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        CleanupResources resources;
+		IDXGIFactory* factory;
+		if (((long(__stdcall*)(const IID&, void**))(CreateDXGIFactory))(__uuidof(IDXGIFactory), (void**)&factory) < 0)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        // Initialize DXGI factory
-        auto CreateDXGIFactory = reinterpret_cast<void*>(GetProcAddress(libDXGI, "CreateDXGIFactory"));
-        if (!CreateDXGIFactory) {
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		IDXGIAdapter* adapter;
+		if (factory->EnumAdapters(0, &adapter) == DXGI_ERROR_NOT_FOUND)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        IDXGIFactory* factory;
-        if (FAILED(reinterpret_cast<HRESULT(__stdcall*)(const IID&, void**)>(CreateDXGIFactory)(
-            __uuidof(IDXGIFactory), reinterpret_cast<void**>(&factory)))) {
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		void* D3D12CreateDevice;
+		if ((D3D12CreateDevice = ::GetProcAddress(libD3D12, "D3D12CreateDevice")) == NULL)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        // Get adapter
-        if (FAILED(factory->EnumAdapters(0, &resources.adapter))) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		ID3D12Device* device;
+		if (((long(__stdcall*)(IUnknown*, D3D_FEATURE_LEVEL, const IID&, void**))(D3D12CreateDevice))(adapter, D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), (void**)&device) < 0)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        // Create device
-        auto D3D12CreateDevice = reinterpret_cast<void*>(GetProcAddress(libD3D12, "D3D12CreateDevice"));
-        if (!D3D12CreateDevice || FAILED(reinterpret_cast<HRESULT(__stdcall*)(IUnknown*,
-            D3D_FEATURE_LEVEL, const IID&, void**)>(D3D12CreateDevice)(
-                resources.adapter, D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device),
-                reinterpret_cast<void**>(&resources.device)))) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		D3D12_COMMAND_QUEUE_DESC queueDesc;
+		queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+		queueDesc.Priority = 0;
+		queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+		queueDesc.NodeMask = 0;
 
-        // Create command queue
-        D3D12_COMMAND_QUEUE_DESC queueDesc = {
-            D3D12_COMMAND_LIST_TYPE_DIRECT,
-            0,
-            D3D12_COMMAND_QUEUE_FLAG_NONE,
-            0
-        };
+		ID3D12CommandQueue* commandQueue;
+		if (device->CreateCommandQueue(&queueDesc, __uuidof(ID3D12CommandQueue), (void**)&commandQueue) < 0)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        if (FAILED(resources.device->CreateCommandQueue(&queueDesc,
-            IID_PPV_ARGS(&resources.commandQueue)))) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		ID3D12CommandAllocator* commandAllocator;
+		if (device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, __uuidof(ID3D12CommandAllocator), (void**)&commandAllocator) < 0)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        // Create command allocator
-        if (FAILED(resources.device->CreateCommandAllocator(
-            D3D12_COMMAND_LIST_TYPE_DIRECT,
-            IID_PPV_ARGS(&resources.commandAllocator)))) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		ID3D12GraphicsCommandList* commandList;
+		if (device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator, NULL, __uuidof(ID3D12GraphicsCommandList), (void**)&commandList) < 0)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        // Create command list
-        if (FAILED(resources.device->CreateCommandList(
-            0, D3D12_COMMAND_LIST_TYPE_DIRECT,
-            resources.commandAllocator, nullptr,
-            IID_PPV_ARGS(&resources.commandList)))) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		DXGI_RATIONAL refreshRate;
+		refreshRate.Numerator = 60;
+		refreshRate.Denominator = 1;
 
-        // Setup swap chain
-        DXGI_RATIONAL refreshRate = { 60, 1 };
+		DXGI_MODE_DESC bufferDesc;
+		bufferDesc.Width = 100;
+		bufferDesc.Height = 100;
+		bufferDesc.RefreshRate = refreshRate;
+		bufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+		bufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+		bufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-        // Initialize MODE_DESC members directly
-        DXGI_MODE_DESC bufferDesc = {
-            100,
-            100,
-            refreshRate,
-            DXGI_FORMAT_R8G8B8A8_UNORM,
-            DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED,
-            DXGI_MODE_SCALING_UNSPECIFIED
-        };
+		DXGI_SAMPLE_DESC sampleDesc;
+		sampleDesc.Count = 1;
+		sampleDesc.Quality = 0;
 
-        // Initialize SAMPLE_DESC members directly
-        DXGI_SAMPLE_DESC sampleDesc = {
-            1,
-            0
-        };
+		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+		swapChainDesc.BufferDesc = bufferDesc;
+		swapChainDesc.SampleDesc = sampleDesc;
+		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		swapChainDesc.BufferCount = 2;
+		swapChainDesc.OutputWindow = window;
+		swapChainDesc.Windowed = 1;
+		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+		swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-        // Initialize SWAP_CHAIN_DESC members directly
-        DXGI_SWAP_CHAIN_DESC swapChainDesc = {
-            bufferDesc,
-            sampleDesc,
-            DXGI_USAGE_RENDER_TARGET_OUTPUT,
-            2,
-            window,
-            TRUE,
-            DXGI_SWAP_EFFECT_FLIP_DISCARD,
-            DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
-        };
+		IDXGISwapChain* swapChain;
+		if (factory->CreateSwapChain(commandQueue, &swapChainDesc, &swapChain) < 0)
+		{
+			::DestroyWindow(window);
+			::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+			return false;
+		}
 
-        if (FAILED(factory->CreateSwapChain(
-            resources.commandQueue, &swapChainDesc,
-            reinterpret_cast<IDXGISwapChain**>(&resources.swapChain)))) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		m_table = (uint64_t*)::calloc(150, sizeof(uint64_t));
+		::memcpy(m_table, *(uint64_t**)device, 44 * sizeof(uint64_t));
+		::memcpy(m_table + 44, *(uint64_t**)commandQueue, 19 * sizeof(uint64_t));
+		::memcpy(m_table + 44 + 19, *(uint64_t**)commandAllocator, 9 * sizeof(uint64_t));
+		::memcpy(m_table + 44 + 19 + 9, *(uint64_t**)commandList, 60 * sizeof(uint64_t));
+		::memcpy(m_table + 44 + 19 + 9 + 60, *(uint64_t**)swapChain, 18 * sizeof(uint64_t));
 
-        // Allocate memory for function table
-        m_table = static_cast<uint64_t*>(calloc(150, sizeof(uint64_t)));
-        if (!m_table) {
-            factory->Release();
-            DestroyWindow(window);
-            UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
-            return false;
-        }
+		MH_Initialize();
 
-        // Copy function pointers
-        memcpy(m_table, *(uint64_t**)resources.device, 44 * sizeof(uint64_t));
-        memcpy(m_table + 44, *(uint64_t**)resources.commandQueue, 19 * sizeof(uint64_t));
-        memcpy(m_table + 63, *(uint64_t**)resources.commandAllocator, 9 * sizeof(uint64_t));
-        memcpy(m_table + 72, *(uint64_t**)resources.commandList, 60 * sizeof(uint64_t));
-        memcpy(m_table + 132, *(uint64_t**)resources.swapChain, 18 * sizeof(uint64_t));
+		device->Release();
+		device = NULL;
 
-        MH_Initialize();
+		commandQueue->Release();
+		commandQueue = NULL;
 
-        // Cleanup remaining resources
-        resources.cleanup();
-        DestroyWindow(window);
-        UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+		commandAllocator->Release();
+		commandAllocator = NULL;
 
-        return true;
+		commandList->Release();
+		commandList = NULL;
+
+		swapChain->Release();
+		swapChain = NULL;
+
+		::DestroyWindow(window);
+		::UnregisterClass(windowClass.lpszClassName, windowClass.hInstance);
+
+		return true;
     }
 
     static void Shutdown()
@@ -239,6 +227,7 @@ public:
 
     static void Unbind(uint16_t _index)
     {
-        MH_DisableHook((void*)m_table[_index]);
+		void* target = (void*)m_table[_index];
+        MH_DisableHook(target);
     }
 };

@@ -15,7 +15,6 @@ public:
 	entt::dispatcher m_dispatcher;
 	HookManager m_hookManager;
 
-	void RenderEvent(const ImGuiRenderEvent& ev);
 	void Init(HINSTANCE instance);
 };
 

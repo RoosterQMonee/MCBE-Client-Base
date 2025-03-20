@@ -43,14 +43,12 @@ void DirectXHook::Enable() {
 	if (!hWindow) hWindow = FindWindowA(nullptr, "Minecraft: Developer Edition");
 
 	DXFunctions::Init();
-	bool a = DXFunctions::Bind(54, (void**)&DXExternals::oExecuteCommandListsD3D12, &DirectXHook::hookExecuteCommandListsD3D12);
-	bool b = DXFunctions::Bind(58, (void**)&DXExternals::oSignalD3D12, DirectXHook::hookSignalD3D12);
-	bool c = DXFunctions::Bind(84, (void**)&DXExternals::oDrawInstancedD3D12, DirectXHook::hookDrawInstancedD3D12);
-	bool d = DXFunctions::Bind(85, (void**)&DXExternals::oDrawIndexedInstancedD3D12, DirectXHook::hookDrawIndexedInstancedD3D12);
-	bool e = DXFunctions::Bind(140, (void**)&DXExternals::oPresentD3D12, DirectXHook::hookPresentD3D12);
-	bool f = DXFunctions::Bind(145, (void**)&DXExternals::oResizeBuffersD3D12, DirectXHook::HookResizeBuffersD3D12);
-
-	spdlog::info("dx: {},{},{},{},{},{}", a,b,c,d,e,f);
+	DXFunctions::Bind(54, (void**)&DXExternals::oExecuteCommandListsD3D12, &DirectXHook::hookExecuteCommandListsD3D12);
+	DXFunctions::Bind(58, (void**)&DXExternals::oSignalD3D12, DirectXHook::hookSignalD3D12);
+	DXFunctions::Bind(84, (void**)&DXExternals::oDrawInstancedD3D12, DirectXHook::hookDrawInstancedD3D12);
+	DXFunctions::Bind(85, (void**)&DXExternals::oDrawIndexedInstancedD3D12, DirectXHook::hookDrawIndexedInstancedD3D12);
+	DXFunctions::Bind(140, (void**)&DXExternals::oPresentD3D12, DirectXHook::hookPresentD3D12);
+	DXFunctions::Bind(145, (void**)&DXExternals::oResizeBuffersD3D12, DirectXHook::HookResizeBuffersD3D12);
 }
 
 void DirectXHook::Disable() {
@@ -59,10 +57,13 @@ void DirectXHook::Disable() {
 
 	DXFunctions::Unbind(54);
 	DXFunctions::Unbind(58);
-	DXFunctions::Unbind(140);
-	DXFunctions::Unbind(145);
 	DXFunctions::Unbind(84);
 	DXFunctions::Unbind(85);
+	DXFunctions::Unbind(140);
+	DXFunctions::Unbind(145);
+}
+
+DirectXHook::DirectXHook() : Hook("DirectX") {
 }
 
 DirectXHook::~DirectXHook() {
@@ -307,10 +308,9 @@ ULONG __fastcall DirectXHook::HookReleaseD3D12(IDXGISwapChain3* pSwapChain) {
 	return DXExternals::oReleaseD3D12(pSwapChain);
 }
 
-
 long __fastcall DirectXHook::hookPresentD3D12(IDXGISwapChain3* pSwapChain, UINT SyncInterval, UINT Flags) {
 	if (true) { // add your super awesome init check here!
-		auto _lock = std::lock_guard(lock);
+		auto _lock = std::lock_guard(lock); // this (MIGHT) be removable
 
 		_pSwapChain = pSwapChain;
 		DirectXHook::CreateD11o12DeviceContext();

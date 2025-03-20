@@ -19,14 +19,13 @@
 
 class DirectXHook : public Hook {
 public:
-	DirectXHook() : Hook("DirectX") {};
+	DirectXHook();
 	~DirectXHook();
 
-	void Enable() override;
-	void Disable() override;
+	void Enable();
+	void Disable();
 
 	static void CopyBitmap(ID2D1DeviceContext* ctx, Microsoft::WRL::ComPtr<ID2D1Bitmap1>& from, Microsoft::WRL::ComPtr<ID2D1Bitmap>& to);
-
 	static void CreateD11o12DeviceContext();
 	static void ClearFrameContext(size_t index);
 	static void ReleaseRender();
