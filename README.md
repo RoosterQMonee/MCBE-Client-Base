@@ -1,4 +1,4 @@
-# Minecraft BedrockBase
+# Minecraft Bedrock Base
 
 **MC:BE Client base** - A simple base for `Minecraft: Bedrock Edition` clients written in C++20
 
