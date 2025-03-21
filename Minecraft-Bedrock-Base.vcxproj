@@ -167,8 +167,12 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="MCBase\Hooks\Impl\DirectX.cpp" />
     <ClCompile Include="MCBase\Hooks\Impl\FieldOfView.cpp" />
+    <ClCompile Include="MCBase\Hooks\Impl\SetupAndRender.cpp" />
     <ClCompile Include="MCBase\MCBase.cpp" />
     <ClCompile Include="MCBase\Modules\Impl\Zoom.cpp" />
+    <ClCompile Include="SDK\Client\ClientInstance.cpp" />
+    <ClCompile Include="SDK\Render\GuiData.cpp" />
+    <ClCompile Include="SDK\Render\MinecraftUIRenderContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\EnTT\config\config.h" />
@@ -410,11 +414,15 @@
     <ClInclude Include="MCBase\Hooks\Impl\Extended\DirectXExternals.h" />
     <ClInclude Include="MCBase\Hooks\Impl\Extended\DirectXFunctions.h" />
     <ClInclude Include="MCBase\Hooks\Impl\FieldOfView.h" />
+    <ClInclude Include="MCBase\Hooks\Impl\SetupAndRender.h" />
     <ClInclude Include="MCBase\MCBase.h" />
     <ClInclude Include="MCBase\Modules\Impl\Zoom.h" />
     <ClInclude Include="MCBase\Modules\Module.h" />
     <ClInclude Include="MCBase\Modules\ModuleManager.h" />
     <ClInclude Include="MCBase\Modules\Setting.h" />
+    <ClInclude Include="SDK\Client\ClientInstance.h" />
+    <ClInclude Include="SDK\Render\GuiData.h" />
+    <ClInclude Include="SDK\Render\MinecraftUIRenderContext.h" />
     <ClInclude Include="Util\Manager.h" />
     <ClInclude Include="Util\Memory.h" />
     <ClInclude Include="Util\Winrt.h" />

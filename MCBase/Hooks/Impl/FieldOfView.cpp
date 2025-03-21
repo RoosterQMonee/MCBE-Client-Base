@@ -6,8 +6,6 @@
 #include <MemLib/Helpers.h>
 #include <MemLib/MinHook/Minhook.h>
 
-void* target = nullptr;
-
 void FieldOfViewHook::Enable() {
 	hat::scan_result result = hat::find_pattern(Signatures::FieldOfView, ".text");
 	const std::byte* address = result.get();

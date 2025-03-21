@@ -11,6 +11,14 @@ enum ModuleCategory : uint8_t {
 };
 
 class Module {
+private:
+	std::vector<std::shared_ptr<Setting<void>>> m_settings;
+
+protected:
+	ModuleCategory m_category;
+	std::string m_name;
+	bool m_enabled;
+
 public:
 	Module(std::string& name, ModuleCategory category, bool enabled = false) : m_name{ name }, m_category{ category }, m_enabled{ enabled } {};
 	Module(const char* name, ModuleCategory category, bool enabled = false) : m_name{ std::string(name) }, m_category{ category }, m_enabled{ enabled } {};
@@ -30,12 +38,4 @@ public:
 		m_settings.push_back(setting);
 		return setting;
 	}
-
-private:
-	std::vector<std::shared_ptr<Setting<void>>> m_settings;
-
-protected:
-	ModuleCategory m_category;
-	std::string m_name;
-	bool m_enabled;
 };

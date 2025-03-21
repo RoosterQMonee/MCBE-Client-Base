@@ -5,10 +5,10 @@
 
 #include <Dependencies/MemLib/Module.h>
 #include <Dependencies/EnTT/entt.hpp>
+#include <Dependencies/ImGui/imgui.h>
 #include <MCBase/Hooks/HookManager.h>
 #include <MCBase/Modules/ModuleManager.h>
-#include "Events/Impl/GraphicalEvents.h"
-#include <ImGui/imgui.h>
+#include <SDK/Client/ClientInstance.h>
 
 class IClient {
 public:
@@ -18,6 +18,8 @@ public:
 
 	ModuleManager m_moduleManager;
 	HookManager m_hookManager;
+
+	ClientInstance* m_clientInstance;
 
 	void Init(HINSTANCE instance);
 };

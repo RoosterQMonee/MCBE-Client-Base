@@ -1,6 +1,8 @@
 #pragma once
 
+#include <concepts>
 #include <variant>
+#include <memory>
 #include <limits>
 #include <stdexcept>
 #include <string>
@@ -14,6 +16,7 @@ template<typename T>
 struct StorageConstraints {
     static constexpr bool has_min_max = false;
     static constexpr bool has_default_state = false;
+    T default_state{};
 };
 
 template<>
@@ -36,12 +39,14 @@ template<>
 struct StorageConstraints<bool> {
     static constexpr bool has_min_max = false;
     static constexpr bool has_default_state = true;
-    bool default_state = false;
 };
 
 template<typename T>
 struct Setting {
 private:
+    typedef void(*callbackType)(T&);
+
+    callbackType m_changeCallback;
     std::variant<T> m_value;
     StorageConstraints<T> m_constraints;
 
@@ -51,6 +56,8 @@ public:
     template<typename U>
     void SetValue(U&& newValue) {
         m_value = std::forward<U>(newValue);
+        if (m_changeCallback != nullptr)
+            m_changeCallback(m_value);
     }
 
     T GetValue() const {
@@ -67,8 +74,11 @@ public:
 
     template<typename DefaultState>
     void SetDefaultState(DefaultState state) {
-        if constexpr (StorageConstraints<T>::has_default_state) {
-            m_constraints.default_state = static_cast<bool>(state);
-        }
+        m_constraints.default_state = state;
+    }
+
+    template<std::invocable<T&> F>
+    void SetChangeCallback(F&& callback) const {
+        m_changeCallback = callback;
     }
 };

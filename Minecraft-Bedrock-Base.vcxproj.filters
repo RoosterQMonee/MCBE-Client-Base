@@ -69,6 +69,18 @@
     <ClCompile Include="MCBase\Modules\Impl\Zoom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SDK\Render\MinecraftUIRenderContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\Render\GuiData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDK\Client\ClientInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MCBase\Hooks\Impl\SetupAndRender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MCBase\MCBase.h">
@@ -810,6 +822,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MCBase\Modules\Impl\Zoom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MCBase\Hooks\Impl\SetupAndRender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Render\MinecraftUIRenderContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Client\ClientInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDK\Render\GuiData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
