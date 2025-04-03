@@ -1,9 +1,8 @@
 #pragma once
 
 #include <MCBase/Hooks/Hook.h>
+#include <SDK/Render/ScreenView.h>
 #include <SDK/Render/MinecraftUIRenderContext.h>
-
-class ScreenView;
 
 class SetupAndRenderHook : public Hook {
 public:

@@ -5,6 +5,7 @@
 #include <MemLib/Scanner.h>
 #include <MemLib/Helpers.h>
 #include <MemLib/MinHook/Minhook.h>
+#include <MCBase/Events/Impl/GraphicalEvents.h>
 
 void SetupAndRenderHook::Enable() {
 	hat::scan_result result = hat::find_pattern(Signatures::SetupAndRender, ".text");
@@ -39,6 +40,11 @@ SetupAndRenderHook::~SetupAndRenderHook() {
 
 void SetupAndRenderHook::OnSetupAndRender(ScreenView* pScreenView, MinecraftUIRenderContext* muirc) {
 	Client.get()->m_clientInstance = muirc->GetClientInstance();
+	Client.get()->m_dispatcher.trigger(SetupAndRenderEvent{
+		pScreenView->VisualTree->root->getLayerName(),
+		muirc->GetClientInstance(),
+		pScreenView
+	});
 	MemLib::call_func<void, ScreenView*, MinecraftUIRenderContext*>(
 		m_original, pScreenView, muirc
 	);

@@ -16,10 +16,15 @@ namespace Signatures {
 
 namespace Offsets {
 	// VFuncs
-	DEFINE_OFFSET(MinecraftUIRenderContext_ClientInstance, 200);
+	DEFINE_OFFSET(MinecraftUIRenderContext_ClientInstance, 0x8);
 	DEFINE_OFFSET(ClientInstance_GetScreenName, 268);
 	DEFINE_OFFSET(ClientInstance_GetLocalPlayer, 30);
 
 	// Offsets
 	DEFINE_OFFSET(ClientInstance_GuiData, 0x590);
+	DEFINE_OFFSET(ScreenView_VisualTree, 0x48);
+	DEFINE_OFFSET(UIControl_LayerName, 0x20);
+	DEFINE_OFFSET(VisualTree_Root, 0x8);
+	DEFINE_OFFSET(UIControl_SizeConstrains, 0x40);
+	DEFINE_OFFSET(UIControl_ParentRelativePosition, 0x78);
 }

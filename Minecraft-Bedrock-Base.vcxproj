@@ -423,7 +423,11 @@
     <ClInclude Include="SDK\Client\ClientInstance.h" />
     <ClInclude Include="SDK\Render\GuiData.h" />
     <ClInclude Include="SDK\Render\MinecraftUIRenderContext.h" />
+    <ClInclude Include="SDK\Render\ScreenView.h" />
+    <ClInclude Include="SDK\Render\UIControl.h" />
+    <ClInclude Include="SDK\Render\VisualTree.h" />
     <ClInclude Include="Util\Manager.h" />
+    <ClInclude Include="Util\Math.h" />
     <ClInclude Include="Util\Memory.h" />
     <ClInclude Include="Util\Winrt.h" />
   </ItemGroup>

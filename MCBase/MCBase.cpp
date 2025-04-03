@@ -1,9 +1,12 @@
 #include "MCBase.h"
 #include <Util/Winrt.h>
 #include <Dependencies/spdlog/spdlog.h>
+#include <Windows.h>
+#include <iostream>
 
 // Key: 48 83 EC ? ? ? C1 4C 8D 05
 // Mouse: 48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 44 0F B7 BC 24
+// TODO: make hooks / modules list dependencies on sigs to load working modules after updates
 
 void IClient::Init(HINSTANCE instance) {
 	m_moduleInformation = MemLib::Module::get_module_information("Minecraft.Windows.exe");
