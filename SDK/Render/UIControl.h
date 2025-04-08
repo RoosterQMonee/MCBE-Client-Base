@@ -8,10 +8,10 @@
 
 class UIControl {
 public:
-    BUILD_ACCESS(this, Vector2<float>, sizeConstrains, Offsets::UIControl_SizeConstrains);
-    BUILD_ACCESS(this, Vector2<float>, parentRelativePosition, Offsets::UIControl_ParentRelativePosition);
+    BUILD_ACCESS(this, Vector2<float>, sizeConstrains, MemoryManager::Offsets<uintptr_t>::GetOffset("UIControl::SizeConstrains"));
+    BUILD_ACCESS(this, Vector2<float>, parentRelativePosition, MemoryManager::Offsets<uintptr_t>::GetOffset("UIControl::ParentRelativePosition"));
 
     std::string& getLayerName() {
-        return hat::member_at<std::string>(this, Offsets::UIControl_LayerName);
+        return hat::member_at<std::string>(this, MemoryManager::Offsets<uintptr_t>::GetOffset("UIControl::LayerName"));
     }
 };

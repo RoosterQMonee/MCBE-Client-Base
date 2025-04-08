@@ -8,7 +8,7 @@
 #include <MCBase/Events/Impl/GraphicalEvents.h>
 
 void SetupAndRenderHook::Enable() {
-	hat::scan_result result = hat::find_pattern(Signatures::SetupAndRender, ".text");
+	hat::scan_result result = hat::find_pattern(MemoryManager::GetSignature("SetupAndRender"), ".text");
 	const std::byte* address = result.get();
 
 	if (address == nullptr) {
@@ -16,16 +16,18 @@ void SetupAndRenderHook::Enable() {
 		return;
 	}
 
-	// not a huge fan of this
-	target = reinterpret_cast<void*>(const_cast<std::byte*>(address));
-
-	MH_CreateHook(target, &SetupAndRenderHook::OnSetupAndRender, &m_original);
-	MH_EnableHook(target);
+	uintptr_t targetAddress = reinterpret_cast<uintptr_t>(address);
+	try {
+		MemoryManager::CreateHook<&SetupAndRenderHook::OnSetupAndRender>(targetAddress);
+		spdlog::info("Hook installed successfully for {}", m_name);
+	}
+	catch (const std::exception& ex) {
+		spdlog::error("Failed to hook {}: {}", m_name, ex.what());
+	}
 }
 
 void SetupAndRenderHook::Disable() {
-	if (target != nullptr)
-		MH_DisableHook(target);
+	MemoryManager::DisableHook<&SetupAndRenderHook::OnSetupAndRender>();
 }
 
 SetupAndRenderHook::SetupAndRenderHook() : Hook("SetupAndRender") {
@@ -46,6 +48,7 @@ void SetupAndRenderHook::OnSetupAndRender(ScreenView* pScreenView, MinecraftUIRe
 		pScreenView
 	});
 	MemLib::call_func<void, ScreenView*, MinecraftUIRenderContext*>(
-		m_original, pScreenView, muirc
+		MemoryManager::GetOriginal<&SetupAndRenderHook::OnSetupAndRender>(),
+		pScreenView, muirc
 	);
 }

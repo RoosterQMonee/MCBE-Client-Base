@@ -6,5 +6,5 @@
 
 class ScreenView {
 public:
-    BUILD_ACCESS(this, class VisualTree*, VisualTree, Offsets::ScreenView_VisualTree);
+    BUILD_ACCESS(this, class VisualTree*, VisualTree, MemoryManager::Offsets<uintptr_t>::GetOffset("ScreenView::VisualTree"));
 };

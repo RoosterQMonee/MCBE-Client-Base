@@ -16,5 +16,4 @@ public:
 protected:
 	void* target = nullptr;
 	std::string m_name;
-	static inline void* m_original = nullptr;
 };

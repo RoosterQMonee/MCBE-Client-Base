@@ -7,7 +7,8 @@
 #include <MemLib/MinHook/Minhook.h>
 
 void FieldOfViewHook::Enable() {
-	hat::scan_result result = hat::find_pattern(Signatures::FieldOfView, ".text");
+	auto sig = MemoryManager::Signatures::GetSignature("FieldOfView");
+	hat::scan_result result = hat::find_pattern(sig, ".text");
 	const std::byte* address = result.get();
 
 	if (address == nullptr) {
@@ -15,16 +16,18 @@ void FieldOfViewHook::Enable() {
 		return;
 	}
 
-	// not a huge fan of this
-	target = reinterpret_cast<void*>(const_cast<std::byte*>(address));
-
-	MH_CreateHook(target, &FieldOfViewHook::OnFieldOfView, &m_original);
-	MH_EnableHook(target);
+	uintptr_t targetAddress = reinterpret_cast<uintptr_t>(address);
+	try {
+		MemoryManager::Hooks<decltype(&FieldOfViewHook::OnFieldOfView)>::CreateHook<&FieldOfViewHook::OnFieldOfView>(targetAddress);
+		spdlog::info("Hook installed successfully for {}", m_name);
+	}
+	catch (const std::exception& ex) {
+		spdlog::error("Failed to hook {}: {}", m_name, ex.what());
+	}
 }
 
 void FieldOfViewHook::Disable() {
-	if (target != nullptr)
-		MH_DisableHook(target);
+	MemoryManager::Hooks<decltype(&FieldOfViewHook::OnFieldOfView)>::DisableHook<&FieldOfViewHook::OnFieldOfView>();
 }
 
 FieldOfViewHook::FieldOfViewHook() : Hook("FieldOfView") {
@@ -42,6 +45,7 @@ void* FieldOfViewHook::OnFieldOfView(LevelRendererPlayer* self, float fov, bool 
 		fov = m_fov;
 	
 	return MemLib::call_func<void*, LevelRendererPlayer*, float, bool>(
-		m_original, self, fov, a
+		MemoryManager::GetOriginal<&FieldOfViewHook::OnFieldOfView>(),
+		self, fov, a
 	);
 }

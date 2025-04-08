@@ -5,11 +5,13 @@
 #include <LibHat/libhat/Access.hpp>
 
 GuiData* ClientInstance::GetGuiData() {
-    return hat::member_at<GuiData*>(this, Offsets::ClientInstance_GuiData);
+    return hat::member_at<GuiData*>(
+        this, MemoryManager::Offsets<uintptr_t>::GetOffset("ClientInstance::GuiData"));
 };
 
 std::string ClientInstance::GetScreenName() {
-    return MemLib::call_vfunc_index<std::string>(Offsets::ClientInstance_GetScreenName, this);
+    return MemLib::call_vfunc_index<std::string>(
+        MemoryManager::Offsets<uintptr_t>::GetOffset("ClientInstance::GetScreenName"), this);
 }
 
 //LocalPlayer* ClientInstance::GetLocalPlayer() {

@@ -6,5 +6,5 @@
 
 class VisualTree {
 public:
-    BUILD_ACCESS(this, class UIControl*, root, Offsets::VisualTree_Root);
+    BUILD_ACCESS(this, class UIControl*, root, MemoryManager::Offsets<uintptr_t>::GetOffset("VisualTree::Root"));
 };
